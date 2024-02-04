@@ -1,0 +1,17 @@
+{
+  "apps": {
+    "name": "ql-server",
+    "script": "./dist/main.js",
+    "args": "--abort-on-uncaught-exception",
+    "watch": [
+      "./dist"
+    ],
+    "watch_delay": 1000,
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "instance_var": "INSTANCE_ID",
+    "instances": "MAX",
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }
+}

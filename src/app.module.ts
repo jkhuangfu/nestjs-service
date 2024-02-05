@@ -1,9 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common';
+import { type MiddlewareConsumer, Module, type NestModule, ValidationPipe } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
-import * as xmlBodyParser from 'express-xml-bodyparser';
+import xmlBodyParser from 'express-xml-bodyparser';
 import { format, transports } from 'winston';
 import { WinstonModule } from 'nest-winston';
-import * as DailyRotateFile from 'winston-daily-rotate-file';
+import DailyRotateFile from 'winston-daily-rotate-file';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
@@ -13,6 +13,7 @@ import { UserModule } from './modules/User/User.module';
 import { LoginModule } from './modules/login/login.module';
 import { QlModule } from './modules/ql/ql.module';
 import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -47,7 +48,6 @@ import { AppController } from './app.controller';
             format.label({
               label: 'services',
             }),
-
             format.splat(),
             format.printf((info) => {
               return `${info.timestamp} ${info.level}: [${info.label}]${info.message}`;
@@ -85,13 +85,13 @@ import { AppController } from './app.controller';
         };
       },
     }),
-
     UserModule,
     LoginModule,
     QlModule,
   ],
   controllers: [AppController],
   providers: [
+    AppService,
     {
       provide: APP_FILTER,
       useClass: HttpErrorExceptionFilter,

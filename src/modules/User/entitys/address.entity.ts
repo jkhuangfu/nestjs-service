@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, OneToOne } from 'typeorm';
+import { Entity, PrimaryColumn, Column, OneToOne, Relation } from 'typeorm';
 import { User } from './user.entity';
 
 @Entity()
@@ -13,5 +13,5 @@ export class Address {
   city: string;
 
   @OneToOne(() => User)
-  user: User;
+  user: Relation<User>;
 }
